@@ -24,7 +24,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
 Plug 'suy/vim-ctrlp-commandline'
 Plug 'kana/vim-submode'
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plug 'fatih/vim-go',  { 'do': ':GoUpdateBinaries' }
 call plug#end()
 """"""""""""""""""""""""""""""
 
