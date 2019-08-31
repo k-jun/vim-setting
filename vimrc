@@ -25,6 +25,7 @@ Plug 'tacahiroy/ctrlp-funky'
 Plug 'suy/vim-ctrlp-commandline'
 Plug 'kana/vim-submode'
 Plug 'fatih/vim-go',  { 'do': ':GoUpdateBinaries' }
+Plug 'scrooloose/syntastic'
 call plug#end()
 """"""""""""""""""""""""""""""
 
@@ -174,9 +175,6 @@ source $VIMRUNTIME/macros/matchit.vim " Vimの「%」を拡張する
 set wildmenu " コマンドモードの補完
 set history=5000 " 保存するコマンド履歴の数
 
-
-
-
 " マウスの有効化
 if has('mouse')
     set mouse=a
@@ -205,28 +203,29 @@ if &term =~ "xterm"
 endif
 
 " http://blog.remora.cx/2010/12/vim-ref-with-unite.html
+" とりあえず無効化しておく
 """"""""""""""""""""""""""""""
 " Unit.vimの設定
 """"""""""""""""""""""""""""""
 " 入力モードで開始する
-let g:unite_enable_start_insert=1
+" let g:unite_enable_start_insert=1
 " バッファ一覧
-noremap <C-P> :Unite buffer<CR>
+" noremap <C-P> :Unite buffer<CR>
 " ファイル一覧
-noremap <C-N> :Unite -buffer-name=file file<CR>
+" noremap <C-N> :Unite -buffer-name=file file<CR>
 " 最近使ったファイルの一覧
-noremap <C-Z> :Unite file_mru<CR>
+" noremap <C-Z> :Unite file_mru<CR>
 " sourcesを「今開いているファイルのディレクトリ」とする
-noremap :uff :<C-u>UniteWithBufferDir file -buffer-name=file<CR>
+" noremap :uff :<C-u>UniteWithBufferDir file -buffer-name=file<CR>
 " ウィンドウを分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
-au FileType unite inoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
+" au FileType unite nnoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
+" au FileType unite inoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
 " ウィンドウを縦に分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-K> unite#do_action('vsplit')
-au FileType unite inoremap <silent> <buffer> <expr> <C-K> unite#do_action('vsplit')
+" au FileType unite nnoremap <silent> <buffer> <expr> <C-K> unite#do_action('vsplit')
+" au FileType unite inoremap <silent> <buffer> <expr> <C-K> unite#do_action('vsplit')
 " ESCキーを2回押すと終了する
-au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
-au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+" au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
+" au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 """""""""""""""""""""""""""""
 
 
@@ -334,12 +333,17 @@ noremap <Left> <Nop>
 noremap <Right> <Nop>
 
 " https://qiita.com/gorilla0513/items/a027885d03af0d6d5863
-let g:go_metalinter_autosave = 1
-let g:go_metalinter_autosave_enabled = ['vet']
+" let g:go_metalinter_autosave = 1
 let g:go_term_mode = 'split'
+let g:go_fmt_command = 'goimports'
+let g:go_autodetect_gopath = 1
+
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
-let g:go_fmt_command = 'goimports'
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_generate_tags = 1
 
 set autowrite
 map <C-n> :cnext<CR>
@@ -352,4 +356,32 @@ set splitbelow
 set splitright
 
 set clipboard+=unnamed
+
+
+" My Custom Setting
+nnoremap <C-h> 0
+nnoremap <C-l> $
+nnoremap <C-[> {
+nnoremap <C-]> }
+
+
+
+"----------------------------------------------------------
+" Syntasticの設定
+"----------------------------------------------------------
+" 構文エラー行に「>>」を表示
+let g:syntastic_enable_signs = 1
+" 構文エラーリストを非表示
+let g:syntastic_auto_loc_list = 0
+execute pathogen#infect()
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_go_checkers = ['govet', 'gofmt']
 
