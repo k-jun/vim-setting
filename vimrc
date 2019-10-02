@@ -20,12 +20,15 @@ Plug 'Yggdroot/indentLine'
 " Plug 'Shougo/neocomplete.vim'
 " Plug 'Shougo/neosnippet'
 " Plug 'Shougo/neosnippet-snippets'
+Plug 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
 Plug 'suy/vim-ctrlp-commandline'
 Plug 'kana/vim-submode'
 Plug 'fatih/vim-go',  { 'do': ':GoUpdateBinaries' }
 Plug 'scrooloose/syntastic'
+Plug 'SirVer/ultisnips'
 call plug#end()
 """"""""""""""""""""""""""""""
 
@@ -176,16 +179,16 @@ set wildmenu " コマンドモードの補完
 set history=5000 " 保存するコマンド履歴の数
 
 " マウスの有効化
-if has('mouse')
-    set mouse=a
-    if has('mouse_sgr')
-        set ttymouse=sgr
-    elseif v:version > 703 || v:version is 703 && has('patch632')
-        set ttymouse=sgr
-    else
-        set ttymouse=xterm2
-    endif
-endif
+" if has('mouse')
+"     set mouse=a
+"     if has('mouse_sgr')
+"         set ttymouse=sgr
+"     elseif v:version > 703 || v:version is 703 && has('patch632')
+"         set ttymouse=sgr
+"     else
+"         set ttymouse=xterm2
+"     endif
+" endif
 
 
 " ペースト設定
@@ -353,6 +356,7 @@ map <C-v> :GoVet<CR>
 " https://vim-jp.org/vim-users-jp/2011/01/31/Hack-198.html
 
 set splitbelow
+set termwinsize=15x0
 set splitright
 
 set clipboard+=unnamed
@@ -385,3 +389,8 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_go_checkers = ['govet', 'gofmt']
 
+" RustVimのせってい
+let g:rustfmt_autosave = 1
+set hidden
+let g:racer_cmd = "~/.cargo/bin/racer"
+let g:racer_experimental_completer = 1
